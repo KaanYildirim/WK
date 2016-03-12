@@ -43,7 +43,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                 url: '/intro',
                 templateUrl: 'templates/intro.html',
                 controller: 'IntroCtrl'
-            }).state('tab.topics', {
+            })
+
+            .state('tab.topics', {
                 url: '/topics',
                 views: {
                     'tab-topics': {
@@ -51,22 +53,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                         controller: 'topicsCtrl'
                     }
                 }
-            }).state('tab.waveKitInfo', {
-                url: '/topics/waveKitInfo',
-                views: {
-                    'tab-topics': {
-                        templateUrl: 'templates/waveKitInfo.html'
-                    }
-                }
-            }).state('tab.settings', {
-                url: '/collection/settings',
-                views: {
-                    'tab-collection': {
-                        templateUrl: 'templates/settings.html',
-                        controller: 'settingsCtrl'
-                    }
-                }
-            }).state('tab.beachtopics', {
+            })
+
+            .state('tab.beachtopics', {
                 url: '/topics/beachtopics',
                 views: {
                     'tab-topics': {
@@ -74,14 +63,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                         controller: 'topicsCtrl'
                     }
                 }
-            }).state('tab.beachInfo', {
-                url: '/topics/beachInfo',
-                views: {
-                    'tab-topics': {
-                        templateUrl: 'templates/beachInfo.html',
-                    }
-                }
-            }).state('tab.watertopics', {
+            })
+
+            .state('tab.watertopics', {
                 url: '/topics/watertopics',
                 views: {
                     'tab-topics': {
@@ -89,14 +73,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                         controller: 'topicsCtrl'
                     }
                 }
-            }).state('tab.waterInfo', {
-                url: '/topics/waterInfo',
-                views: {
-                    'tab-topics': {
-                        templateUrl: 'templates/waterInfo.html',
-                    }
-                }
-            }).state('tab.wavetopics', {
+            })
+
+            .state('tab.wavetopics', {
                 url: '/topics/wavetopics',
                 views: {
                     'tab-topics': {
@@ -104,14 +83,9 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                         controller: 'topicsCtrl'
                     }
                 }
-            }).state('tab.waveInfo', {
-                url: '/topics/waveInfo',
-                views: {
-                    'tab-topics': {
-                        templateUrl: 'templates/waveInfo.html',
-                    }
-                }
-            }).state('tab.browse', {
+            })
+
+            .state('tab.browse', {
                 url: '/browse',
                 views: {
                     'tab-browse': {
@@ -119,16 +93,37 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                         controller: 'browseCtrl'
                     }
                 }
-            }).state('tab.collection', {
+            })
+
+            .state('tab.collection', {
                 url: '/collection',
-                cache: false,
                 views: {
                     'tab-collection': {
                         templateUrl: 'templates/tab-collection.html',
                         controller: 'collectionCtrl'
                     }
                 }
-            });
+            })
+
+            .state('tab.chat', {
+                url: '/chat',
+                views: {
+                    'tab-chat': {
+                        templateUrl: 'templates/tab-chat.html',
+                        controller: 'chatCtrl'
+                    }
+                }
+            })
+
+             .state('tab.settings', {
+                url: '/chat/settings',
+                views: {
+                    'tab-chat': {
+                        templateUrl: 'templates/settings.html',
+                        controller: 'settingsCtrl'
+                    }
+                }
+            })
         // if none of the above states are matched, use this as the fallback
         // $urlRouterProvider.otherwise('intro');
         $urlRouterProvider.otherwise('tab/browse');

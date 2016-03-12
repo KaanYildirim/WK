@@ -43,7 +43,7 @@
 }
 
 
-/* Generel Settings */
+/*/////////// Generel Settings ///////////////*/
 .alerts{
 	font-family: Open Sans;
 	font-size: 26px !important;
@@ -205,10 +205,21 @@
 	background-color: #F1C40F;
 }
 
+/*////////// CHAT ////////////*/
+
+.chatbuttons{
+	font-family: Open Sans;
+	color: white;
+	height: 70px;
+	padding: 0;
+	display:block;
+	border: none;
+	font-size: 20px;
+	text-align: left;
+}
+
 
 /*/////////  SETTINGS ////////////*/
-
-
 
 /*Logout*/
 .logout{

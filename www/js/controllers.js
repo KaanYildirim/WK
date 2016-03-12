@@ -19,16 +19,9 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
 	        });
     	}
     }
-}).controller('settingsCtrl', function($scope, $state, userService) {
-    $scope.user = userService;
-    $scope.logout = function() {
-        userService.logoutUser();
-        $state.go('intro');
-    };
-    $scope.deleteLocalStorage = function() {
-        window.localStorage.clear();
-    };
-}).controller('topicsCtrl', function($scope, $rootScope, $state) {
+})
+
+.controller('topicsCtrl', function($scope, $rootScope, $state) {
     // Call a "LoadFeed" method from another controller (browseCtrl) ////
     $scope.loadBrowseFeed = function() {
         $rootScope.$emit("LoadFeed", {});
@@ -41,7 +34,9 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
     $scope.clearNavHistory = function() {
         $state.go('tab.topics');
     };
-}).filter('internalreverse', function() {
+})
+
+.filter('internalreverse', function() {
     return function(input) {
         input = input || [];
         input.sort(function(a, b) {
@@ -56,7 +51,9 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
         });
         return input;
     };
-}).controller('browseCtrl', function($scope, $rootScope, $firebaseArray, $window, $localstorage, $state, userService, myService, $cordovaSocialSharing, $timeout, $ionicHistory) {
+})
+
+.controller('browseCtrl', function($scope, $rootScope, $firebaseArray, $window, $localstorage, $state, userService, myService, $cordovaSocialSharing, $timeout, $ionicHistory) {
 	// console.log("current: " + $localstorage.get('user', null))
 	$scope.$parent.$on('$ionicView.loaded', function(scopes){
         /*if(	JSON.stringify($localstorage.get("user")) == "null" ||
@@ -132,7 +129,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
         } else {
             $scope.loading = true;
             $scope.noSelectedTopic = false;
-            $scope.SelectedTopic = window.localStorage.getItem("selectedTopic");
+            //$scope.SelectedTopic = window.localStorage.getItem("selectedTopic");
             var selectedTopic = window.localStorage.getItem("selectedTopic");
             //If the topic is selected for the first time it will set to "0"
             if (window.localStorage.getItem(selectedTopic + "Index") == null) {
@@ -148,7 +145,9 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
         };
     };
     //$scope.loadFeed(); // alternative to data-ng-init="loadFeed()"
-}).controller('collectionCtrl', function($scope, $rootScope, userService, $firebaseArray, $localstorage, $window, $cordovaSocialSharing) {
+})
+
+.controller('collectionCtrl', function($scope, $rootScope, userService, $firebaseArray, $localstorage, $window, $cordovaSocialSharing) {
     $scope.loading = true;
     $scope.user = userService;
     // Beacause of this method, browseCtrl can call the "LoadList" function in this controller
@@ -179,10 +178,23 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
     $scope.clearNavHistory = function() {
         $state.go('tab.collection');
     };
-}).filter('reverse', function() {
-    return function(items) {
-        var cards = items.slice().reverse();
-        //console.log(cards);
-        return cards;
+})
+
+
+
+.controller('chatCtrl', function($scope, $state, userService) {
+    
+})
+
+
+.controller('settingsCtrl', function($scope, $state, userService) {
+    $scope.user = userService;
+    $scope.logout = function() {
+        userService.logoutUser();
+        $state.go('intro');
     };
-});
+    $scope.deleteLocalStorage = function() {
+        window.localStorage.clear();
+    };
+})
+
