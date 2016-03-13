@@ -115,6 +115,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                 }
             })
 
+            .state('tab.chatroom', {
+                url: '/chat/chatroom',
+                views: {
+                    'tab-chat': {
+                        templateUrl: 'templates/chatroom.html',
+                        controller: 'chatroomCtrl'
+                    }
+                }
+            })
+
              .state('tab.settings', {
                 url: '/chat/settings',
                 views: {
@@ -124,6 +134,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                     }
                 }
             })
+
+
         // if none of the above states are matched, use this as the fallback
         // $urlRouterProvider.otherwise('intro');
         $urlRouterProvider.otherwise('tab/browse');

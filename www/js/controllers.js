@@ -53,7 +53,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
     };
 })
 
-.controller('browseCtrl', function($scope, $rootScope, $firebaseArray, $window, $localstorage, $state, userService, myService, $cordovaSocialSharing, $timeout, $ionicHistory) {
+.controller('browseCtrl', function($scope, $rootScope, $firebaseArray, $window, $localstorage, $state, userService, myService, $cordovaSocialSharing, $ionicHistory) {
 	// console.log("current: " + $localstorage.get('user', null))
 	$scope.$parent.$on('$ionicView.loaded', function(scopes){
         /*if(	JSON.stringify($localstorage.get("user")) == "null" ||
@@ -129,7 +129,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
         } else {
             $scope.loading = true;
             $scope.noSelectedTopic = false;
-            //$scope.SelectedTopic = window.localStorage.getItem("selectedTopic");
+            $scope.SelectedTopic = window.localStorage.getItem("selectedTopic"); //For title on the card.
             var selectedTopic = window.localStorage.getItem("selectedTopic");
             //If the topic is selected for the first time it will set to "0"
             if (window.localStorage.getItem(selectedTopic + "Index") == null) {
@@ -140,7 +140,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
             $scope.cards.$loaded().then(function(data) {
                 $scope.loading = false;
             });
-            //console.log($scope.cards);
+            console.log($scope.cards);
             //$scope.loading=false;
         };
     };
@@ -182,8 +182,59 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
 
 
 
-.controller('chatCtrl', function($scope, $state, userService) {
+.controller('chatCtrl', function($scope) {
     
+    $scope.setChatRoomName = function(name){
+        window.localStorage.setItem("chatroomName", name);
+    };
+
+
+})
+
+.controller('chatroomCtrl', function($scope, FIREBASE_URL, userService, $firebaseArray,$firebaseObject, $localstorage, $ionicScrollDelegate) {
+    
+    $scope.chatroomName=window.localStorage.getItem("chatroomName");
+    var ChatroomName=window.localStorage.getItem("chatroomName");
+    
+    $scope.user = userService;     
+    $scope.data = {
+        messages: [],
+        message: '',
+        loading: true,
+        showInfo: false
+    };
+
+    var Content = new Firebase(FIREBASE_URL + "/" + ChatroomName + "/messages");
+  
+    //Get current users info
+    var userID = $localstorage.get('user', null);  
+    var userInfo = new Firebase("https://wavepreneur1.firebaseio.com/users/" + userID);
+    userInfo=$firebaseObject(userInfo);
+    
+
+    $scope.loadMessages = function () {
+        $scope.data.messages=$firebaseArray(Content);
+        $scope.data.messages.$loaded().then(function(data){
+            $scope.data.loading=false;
+            $ionicScrollDelegate.$getByHandle('chatroom').scrollBottom(true);
+        });
+    };
+
+    $scope.sendMessage = function () {
+        if($scope.data.message){
+            $scope.data.messages.$add({
+                text: $scope.data.message,
+                username: userInfo.name,
+                userId: userInfo.userId,
+                profilePic: userInfo.profilePic,
+                //timestamp: new Date().getTime
+            });
+            $scope.data.message ='';
+            $ionicScrollDelegate.$getByHandle('chatroom').scrollBottom(true);
+        }
+    };
+
+    $scope.loadMessages();
 })
 
 

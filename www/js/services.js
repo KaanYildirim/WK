@@ -242,10 +242,12 @@ angular.module('starter.services', []).service('userService', function(FIREBASE_
         }
     };
     return self;
-}).service('myService', function(FIREBASE_URL, $firebaseArray) {
+})
+
+.service('myService', function(FIREBASE_URL, $firebaseArray) {
     return {
         getContent: function(topic, selectedTopicIndex) {
-            var Content = new Firebase(FIREBASE_URL + "/" + topic);
+            var Content = new Firebase(FIREBASE_URL + "/" + topic + "/cards");
             var newIndex = parseInt(selectedTopicIndex, 10);
             //console.log(newIndex);
             var query = Content.orderByChild("contentNumber").startAt(newIndex + 1);
@@ -253,7 +255,9 @@ angular.module('starter.services', []).service('userService', function(FIREBASE_
             return $firebaseArray(query);
         }
     }
-}).factory('$localstorage', ['$window', function($window) {
+})
+
+.factory('$localstorage', ['$window', function($window) {
     return {
         set: function(key, value) {
             $window.localStorage[key] = value;
@@ -269,3 +273,16 @@ angular.module('starter.services', []).service('userService', function(FIREBASE_
         }
     }
 }])
+.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+})
