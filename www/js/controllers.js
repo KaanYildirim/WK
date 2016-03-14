@@ -147,7 +147,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
     //$scope.loadFeed(); // alternative to data-ng-init="loadFeed()"
 })
 
-.controller('collectionCtrl', function($scope, $rootScope, userService, $firebaseArray, $localstorage, $window, $cordovaSocialSharing) {
+.controller('collectionCtrl', function($scope, $rootScope, userService, $firebaseArray, $localstorage, $window, $cordovaSocialSharing, FIREBASE_URL) {
     $scope.loading = true;
     $scope.user = userService;
     // Beacause of this method, browseCtrl can call the "LoadList" function in this controller
@@ -155,7 +155,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
         $scope.loadList();
     });
     var userID = $localstorage.get('user', null);
-    var saved = new Firebase("https://wavepreneur1.firebaseio.com/users/" + userID + "/savedContent");
+    var saved = new Firebase(FIREBASE_URL + "/users/" + userID + "/SavedContent");
     // Get Saved Content from Firebase
     $scope.loadList = function() {
         if (saved) {
@@ -208,7 +208,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
   
     //Get current users info
     var userID = $localstorage.get('user', null);  
-    var userInfo = new Firebase("https://wavepreneur1.firebaseio.com/users/" + userID);
+    var userInfo = new Firebase(FIREBASE_URL+"/users/" + userID);
     userInfo=$firebaseObject(userInfo);
     
 
@@ -238,9 +238,17 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
 })
 
 
-.controller('settingsCtrl', function($scope, $state, userService, $ionicPopup, $localstorage) {
+.controller('settingsCtrl', function($scope, $state, userService, $ionicPopup, $localstorage,FIREBASE_URL, $firebaseArray, $firebaseObject) {
     $scope.user = userService;
     
+
+    //Get current users info
+    var userID = $localstorage.get('user', null);  
+    var userInfo = new Firebase(FIREBASE_URL+"/users/" + userID);
+    userInfo=$firebaseObject(userInfo);
+
+    $scope.usersname=userInfo.name;
+    console.log("my name is " + $scope.usersname);
     //User Logout
     $scope.logout = function() {
         userService.logoutUser();
@@ -258,8 +266,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
         if(res) {
 
             //Get current user's ID & connect firebase & remove the user's node
-            var userID = $localstorage.get('user', null);
-            var userAccount = new Firebase("https://wavepreneur1.firebaseio.com/users/" + userID);
+            var userAccount = new Firebase(FIREBASE_URL+"/users/" + userID);
             userAccount.remove();
 
             //Delete Local Storage
@@ -272,16 +279,40 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
         }else {
             console.log('Account not deleted');
         }
-    });
+        });
 
- };
+    };
 
-})
 
-.controller('feedbackCtrl', function($scope, $state, userService, $ionicPopup) {
-    $scope.user = userService;
+    //Feedback
+    $scope.feedback='';
+
+     //Feedback Node
+    var Feedback = new Firebase(FIREBASE_URL + "/feedbacks");
+    var feedbacks = $firebaseArray(Feedback);
+
+    $scope.sendFeedback = function () {
+        if($scope.feedback){
+            console.log("FEEDBACK!!!");
+            feedbacks.$add({
+                text: $scope.feedback,
+                username: userInfo.name,
+                userId: userInfo.userId
+                // email: userInfo.email
+            });
+            $scope.feedback ='';
+
+            $scope.feedbackPopup = function() {
+                var popup = $ionicPopup.alert({
+                title: 'Thanks!',
+                subTitle: 'Thank you for your feedback :)'
+                });
+            };
+            $scope.feedbackPopup();
+        }
+    };
+
+
     
-   
-
- })
+})
 

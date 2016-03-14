@@ -135,17 +135,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                 }
             })
 
-            .state('tab.feedback', {
-                url: '/chat/settings/feedback',
-                views: {
-                    'tab-chat': {
-                        templateUrl: 'templates/feedback.html',
-                        controller: 'feedbackCtrl'
-                    }
-                }
-            })
-
-
         // if none of the above states are matched, use this as the fallback
         // $urlRouterProvider.otherwise('intro');
         $urlRouterProvider.otherwise('tab/browse');

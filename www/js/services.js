@@ -25,7 +25,7 @@ angular.module('starter.services', []).service('userService', function(FIREBASE_
             var userID = $localstorage.get('user', null);
             // console.log(userID);
             //self.current.$save();
-            var saved = new Firebase("https://wavepreneur1.firebaseio.com/users/" + userID + "/savedContent");
+            var saved = new Firebase(FIREBASE_URL + "/users/" + userID + "/SavedContent");
             var savedCards = $firebaseArray(saved);
             savedCards.$add({
                 card
@@ -37,7 +37,7 @@ angular.module('starter.services', []).service('userService', function(FIREBASE_
         removeContent: function(card) {
             self.ensureSaved();
             var userID = $localstorage.get('user', null);
-            var saved = new Firebase("https://wavepreneur1.firebaseio.com/users/" + userID + "/savedContent/" + card.$id);
+            var saved = new Firebase(FIREBASE_URL + "/users/" + userID + "/SavedContent/" + card.$id);
             saved.remove();
         },
         /*
