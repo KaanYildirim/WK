@@ -238,14 +238,50 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
 })
 
 
-.controller('settingsCtrl', function($scope, $state, userService) {
+.controller('settingsCtrl', function($scope, $state, userService, $ionicPopup, $localstorage) {
     $scope.user = userService;
+    
+    //User Logout
     $scope.logout = function() {
         userService.logoutUser();
         $state.go('intro');
     };
-    $scope.deleteLocalStorage = function() {
-        window.localStorage.clear();
-    };
+
+    // Delete Account??
+    $scope.showConfirm = function() {
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Delete Account',
+            template: 'Your account & saved cards will be deleted permanently.'
+        });
+
+        confirmPopup.then(function(res) {
+        if(res) {
+
+            //Get current user's ID & connect firebase & remove the user's node
+            var userID = $localstorage.get('user', null);
+            var userAccount = new Firebase("https://wavepreneur1.firebaseio.com/users/" + userID);
+            userAccount.remove();
+
+            //Delete Local Storage
+            window.localStorage.clear();
+            
+            //Go to "intro" screen
+            $state.go('intro');
+
+            console.log('Account deleted');
+        }else {
+            console.log('Account not deleted');
+        }
+    });
+
+ };
+
 })
+
+.controller('feedbackCtrl', function($scope, $state, userService, $ionicPopup) {
+    $scope.user = userService;
+    
+   
+
+ })
 

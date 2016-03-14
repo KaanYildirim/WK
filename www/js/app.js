@@ -125,12 +125,22 @@ angular.module('starter', ['ionic', 'ngCordova', 'firebase', 'angularMoment', 's
                 }
             })
 
-             .state('tab.settings', {
+            .state('tab.settings', {
                 url: '/chat/settings',
                 views: {
                     'tab-chat': {
                         templateUrl: 'templates/settings.html',
                         controller: 'settingsCtrl'
+                    }
+                }
+            })
+
+            .state('tab.feedback', {
+                url: '/chat/settings/feedback',
+                views: {
+                    'tab-chat': {
+                        templateUrl: 'templates/feedback.html',
+                        controller: 'feedbackCtrl'
                     }
                 }
             })
