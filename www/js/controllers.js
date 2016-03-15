@@ -293,7 +293,7 @@ angular.module('starter.controllers', []).controller('IntroCtrl', function($scop
 
     $scope.sendFeedback = function () {
         if($scope.feedback){
-            console.log("FEEDBACK!!!");
+            //console.log("FEEDBACK!!!");
             feedbacks.$add({
                 text: $scope.feedback,
                 username: userInfo.name,

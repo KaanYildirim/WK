@@ -206,6 +206,16 @@
 	background-color: #F1C40F;
 }
 
+.collectionTitle{
+	font-size: 13px !important;
+}
+.collectionTopic{
+	font-size: 11px !important;
+}
+.collectionSummary{
+	font-size: 9px !important;
+}
+
 /*////////// CHAT ////////////*/
 
 .chatbuttons{
